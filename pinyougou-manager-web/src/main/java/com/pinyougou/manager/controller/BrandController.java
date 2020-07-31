@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @program: pinyougou-parent
@@ -113,4 +114,8 @@ public class BrandController {
         return brandService.findPage(brand, page, rows);
     }
 
+    @RequestMapping("/selectOptionList")
+    public List<Map> selectOptionList() {
+        return brandService.selectOptionList();
+    }
 }

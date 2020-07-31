@@ -12,6 +12,7 @@ import com.pinyougou.sellergoods.service.BrandService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @program: pinyougou-parent
@@ -72,5 +73,9 @@ public class BrandServiceImpl implements BrandService {
         }
         Page<TbBrand> page = (Page<TbBrand>)tbBrandMapper.selectByExample(example);
         return new PageResult(page.getTotal(), page.getResult());
+    }
+
+    public List<Map> selectOptionList() {
+        return tbBrandMapper.selectOptionList();
     }
 }
