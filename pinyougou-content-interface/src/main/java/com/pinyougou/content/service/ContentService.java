@@ -1,22 +1,22 @@
-package com.pinyougou.sellergoods.service;
+package com.pinyougou.content.service;
 
-import com.pinyougou.entity.Goods;
 import com.pinyougou.entity.PageResult;
-import com.pinyougou.pojo.TbGoods;
+import com.pinyougou.pojo.TbContent;
 
 import java.util.List;
+
 /**
  * 服务层接口
  * @author Administrator
  *
  */
-public interface GoodsService {
+public interface ContentService {
 
 	/**
 	 * 返回全部列表
 	 * @return
 	 */
-	public List<TbGoods> findAll();
+	public List<TbContent> findAll();
 	
 	
 	/**
@@ -29,22 +29,23 @@ public interface GoodsService {
 	/**
 	 * 增加
 	*/
-	public void add(TbGoods goods);
+	public void add(TbContent content);
 	
 	
 	/**
 	 * 修改
 	 */
-	public void update(Goods goods);
-
+	public void update(TbContent content);
+	
 
 	/**
 	 * 根据ID获取实体
 	 * @param id
 	 * @return
 	 */
-	public Goods findOne(Long id);
-
+	public TbContent findOne(Long id);
+	
+	
 	/**
 	 * 批量删除
 	 * @param ids
@@ -57,18 +58,6 @@ public interface GoodsService {
 	 * @param pageSize 每页记录数
 	 * @return
 	 */
-	public PageResult findPage(TbGoods goods, int pageNum, int pageSize);
-
-	/**
-	 * 增加
-	 */
-	public void add(Goods goods);
-
-	/**
-	 * 批量修改状态
-	 * @param ids
-	 * @param status
-	 */
-	public void updateStatus(Long []ids,String status);
-
+	public PageResult findPage(TbContent content, int pageNum, int pageSize);
+	
 }

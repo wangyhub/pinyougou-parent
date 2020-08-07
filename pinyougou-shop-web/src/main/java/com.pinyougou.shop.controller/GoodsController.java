@@ -6,6 +6,7 @@ import com.pinyougou.entity.PageResult;
 import com.pinyougou.entity.Result;
 import com.pinyougou.pojo.TbGoods;
 import com.pinyougou.sellergoods.service.GoodsService;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.context.SecurityContextImpl;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -72,7 +73,15 @@ public class GoodsController {
 	 * @return
 	 */
 	@RequestMapping("/update")
-	public Result update(@RequestBody TbGoods goods){
+	public Result update(@RequestBody Goods goods){
+		//校验是否是当前商家的id
+		Goods goods2 = goodsService.findOne(goods.getGoods().getId());
+		//获取当前登录的商家ID
+		String sellerId = SecurityContextHolder.getContext().getAuthentication().getName();
+		//如果传递过来的商家ID并不是当前登录的用户的ID,则属于非法操作
+		if(!goods2.getGoods().getSellerId().equals(sellerId) ||  !goods.getGoods().getSellerId().equals(sellerId) ){
+			return new Result(false, "操作非法");
+		}
 		try {
 			goodsService.update(goods);
 			return new Result(true, "修改成功");
@@ -80,18 +89,19 @@ public class GoodsController {
 			e.printStackTrace();
 			return new Result(false, "修改失败");
 		}
-	}	
-	
+
+	}
+
 	/**
 	 * 获取实体
 	 * @param id
 	 * @return
 	 */
 	@RequestMapping("/findOne")
-	public TbGoods findOne(Long id){
-		return goodsService.findOne(id);		
+	public Goods findOne(Long id){
+		return goodsService.findOne(id);
 	}
-	
+
 	/**
 	 * 批量删除
 	 * @param ids
@@ -116,8 +126,14 @@ public class GoodsController {
 	 * @return
 	 */
 	@RequestMapping("/search")
-	public PageResult search(@RequestBody TbGoods goods, int page, int rows  ){
-		return goodsService.findPage(goods, page, rows);		
+	public PageResult search(@RequestBody TbGoods goods, HttpSession session, int page, int rows  ){
+        //获取商家ID
+        SecurityContextImpl securityContext = (SecurityContextImpl) session.getAttribute("SPRING_SECURITY_CONTEXT");
+        String sellerId = ((UserDetails)securityContext.getAuthentication().getPrincipal()).getUsername();
+        //添加查询条件
+        goods.setSellerId(sellerId);
+
+        return goodsService.findPage(goods, page, rows);
 	}
 	
 }
