@@ -18,11 +18,13 @@
 	<script type="text/javascript" src="../plugins/angularjs/angular.min.js"></script>
 	<script type="text/javascript" src="../js/service/uploadService.js"></script>
 	<script type="text/javascript" src="../js/service/contentService.js"></script>
+	<script type="text/javascript" src="../js/service/contentCategoryService.js"></script>
 	<script type="text/javascript" src="../js/controller/baseController.js"></script>
 	<script type="text/javascript" src="../js/controller/contentController.js"></script>
 </head>
 
-<body class="hold-transition skin-red sidebar-mini">
+<body class="hold-transition skin-red sidebar-mini" ng-app="pinyougou" ng-controller="contentController"
+	ng-init="findContentCategoryList()">
   <!-- .box-body -->
                 
                     <div class="box-header with-border">
@@ -109,21 +111,21 @@
 				<tr>
 		      		<td>广告分类</td>
 		      		<td>
-		      			<select class="form-control" >
-		                </select>
+		      			<select class="form-control" ng-model="entity.categoryId"
+							ng-options="item.id as item.name for item in contentCategoryList"></select>
 		      		</td>
 		      	</tr>
 		      	<tr>
 		      		<td>标题</td>
-		      		<td><input  class="form-control" placeholder="标题" >  </td>
+		      		<td><input  class="form-control" ng-model="entity.title" placeholder="标题" >  </td>
 		      	</tr>
 			    <tr>
 		      		<td>URL</td>
-		      		<td><input  class="form-control" placeholder="URL" >  </td>
+		      		<td><input  class="form-control" ng-model="entity.url" placeholder="URL" >  </td>
 		      	</tr>	
 		      	<tr>
 		      		<td>排序</td>
-		      		<td><input  class="form-control" placeholder="排序" >  </td>
+		      		<td><input  class="form-control" ng-model="sortOrder" placeholder="排序" >  </td>
 		      	</tr>			      	
 		      	<tr>
 		      		<td>广告图片</td>
