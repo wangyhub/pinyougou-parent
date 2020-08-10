@@ -3,13 +3,14 @@ package com.pinyougou.content.service.impl;
 import com.alibaba.dubbo.config.annotation.Service;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.pinyougou.content.service.ContentCategoryService;
 import com.pinyougou.entity.PageResult;
 import com.pinyougou.mapper.TbContentCategoryMapper;
 import com.pinyougou.pojo.TbContentCategory;
 import com.pinyougou.pojo.TbContentCategoryExample;
 import com.pinyougou.pojo.TbContentCategoryExample.Criteria;
-import com.pinyougou.content.service.ContentCategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -19,6 +20,7 @@ import java.util.List;
  *
  */
 @Service
+@Transactional
 public class ContentCategoryServiceImpl implements ContentCategoryService {
 
 	@Autowired
@@ -80,7 +82,7 @@ public class ContentCategoryServiceImpl implements ContentCategoryService {
 	}
 	
 	
-		@Override
+	@Override
 	public PageResult findPage(TbContentCategory contentCategory, int pageNum, int pageSize) {
 		PageHelper.startPage(pageNum, pageSize);
 		
